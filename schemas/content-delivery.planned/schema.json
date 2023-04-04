@@ -1,0 +1,170 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/RealImage/qw-events-catalog/domains/Content%20Delivery/events/content-delivery.planned/schema.json",
+    "title": "Planning content delivery",
+    "type": "object",
+    "properties": {
+        "eventId": {
+            "description": "Unique identifier to identify the planned event",
+            "type": "string",
+            "format": "uuid"
+        },
+        "eventVersion": {
+            "description": "Version of the event",
+            "type": "number"
+        },
+        "dataSchema": {
+            "description": "Schema that data adheres to",
+            "type": "string",
+            "format": "uri"
+        },
+        "bookedEventId": {
+            "description": "Unique identifier of the booked event (parent)",
+            "type": "string",
+            "format": "uuid"
+        },
+        "deliveryMode": {
+            "description": "Mode of delivery",
+            "type": "string",
+            "enum": [
+                "ELECTRONIC",
+                "PARTNERS",
+                "THEATRE_APPLIANCE"
+            ]
+        },
+        "deliveryInstruction": {
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "deliveryMode": {
+                                "const": "ELECTRONIC"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "deliveryInstruction": {
+                                "$ref": "#/$defs/electronic"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "deliveryMode": {
+                                "const": "PARTNERS"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "deliveryInstruction": {
+                                "$ref": "#/$defs/partner"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "deliveryMode": {
+                                "const": "THEATRE_APPLIANCE"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "deliveryInstruction": {
+                                "$ref": "#/$defs/tap"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "required": [
+        "eventId",
+        "eventVersion",
+        "dataSchema",
+        "bookedEventId",
+        "deliveryMode",
+        "deliveryInstruction"
+    ],
+    "$defs": {
+        "tap": {
+            "type": "object",
+            "properties": {
+                "dispatchDeadline": {
+                    "description": "Deadline for the delivery systems to start the delivery",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "applianceId": {
+                    "description": "Unique identifier of the appliance",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "required": [
+                "dispatchDeadline",
+                "applianceId"
+            ]
+        },
+        "partner": {
+            "type": "object",
+            "properties": {
+                "dispatchDeadline": {
+                    "description": "Deadline for the delivery systems to start the delivery",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "partnerId": {
+                    "description": "Unique identifier of the partner",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "methodId": {
+                    "description": "Unique identifier of the method in Partner delivery",
+                    "type": "integer"
+                },
+                "driveType": {
+                    "description": "Drive type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "dispatchDeadline",
+                "partnerId",
+                "methodId",
+                "driveType"
+            ]
+        },
+        "electronic": {
+            "type": "object",
+            "properties": {
+                "dispatchDeadline": {
+                    "description": "Deadline for the delivery systems to start the delivery",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "partnerId": {
+                    "description": "Unique identifier of the partner",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "methodId": {
+                    "description": "Unique identifier of the method in Partner delivery",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "dispatchDeadline",
+                "partnerId",
+                "methodId"
+            ]
+        }
+    }
+}

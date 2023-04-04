@@ -1,0 +1,96 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/RealImage/qw-events-catalog/domains/Content%20Delivery/events/content-delivery.booked/schema.json",
+    "title": "Booking content",
+    "type": "object",
+    "properties": {
+        "eventId": {
+            "description": "Unique identifier to identify the booked event",
+            "type": "string",
+            "format": "uuid"
+        },
+        "eventVersion": {
+            "description": "Version of the event",
+            "type": "number"
+        },
+        "dataSchema": {
+            "description": "Schema that data adheres to",
+            "type": "string",
+            "format": "uri"
+        },
+        "bookingRef": {
+            "description": "Booking reference number",
+            "type": "string"
+        },
+        "theatreId": {
+            "description": "Unique identifier of the theatre",
+            "type": "string",
+            "format": "uuid"
+        },
+        "content": {
+            "type": "object",
+            "properties": {
+                "cplIds": {
+                    "description": "Unique identifier of the CPL",
+                    "type": "array",
+                    "items": [
+                        {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    ]
+                },
+                "dcpIds": {
+                    "description": "Unique identifier of the DCP",
+                    "type": "array",
+                    "items": [
+                        {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    ]
+                },
+                "pklIds": {
+                    "description": "Unique identifier of the PKL",
+                    "type": "array",
+                    "items": [
+                        {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "cplIds",
+                "dcpIds"
+            ]
+        },
+        "orgId": {
+            "description": "Organization identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "deliveryDeadline": {
+            "description": "Deadline to deliver the content",
+            "type": "string",
+            "format": "date-time"
+        },
+        "bookingCreationTime": {
+            "description": "Time of booking creation",
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "eventId",
+        "eventVersion",
+        "dataSchema",
+        "bookingRef",
+        "theatreId",
+        "content",
+        "orgId",
+        "bookingCreationTime",
+        "deliveryDeadline"
+    ]
+}

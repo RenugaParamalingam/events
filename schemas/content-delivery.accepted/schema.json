@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/RealImage/qw-events-catalog/domains/Content%20Delivery/events/content-delivery.accepted/schema.json",
+    "title": "Accepting and delivering content",
+    "type": "object",
+    "properties": {
+        "eventId": {
+            "description": "Unique identifier to identify the accepted event",
+            "type": "string",
+            "format": "uuid"
+        },
+        "eventVersion": {
+            "description": "Version of the event",
+            "type": "number"
+        },
+        "dataSchema": {
+            "description": "Schema that data adheres to",
+            "type": "string",
+            "format": "uri"
+        },
+        "plannedEventId": {
+            "description": "Unique identifier of the planned event (parent)",
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "eventId",
+        "eventVersion",
+        "dataSchema",
+        "plannedEventId"
+    ]
+}
